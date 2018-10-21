@@ -3,7 +3,7 @@
 GraficoSFML::GraficoSFML():posicionJugador(sf::Vector2f(385.f,285.f)),jugador(30.f)
 {
     //ctor
-    tiempoRestante = 120;
+    tiempoRestante = 180;
     numClientesRestantes = 5;
     font.loadFromFile("courier.ttf");
     aOrigenMesas.push_back(sf::Vector2f(120,85));
@@ -188,8 +188,71 @@ bool GraficoSFML::DejaComida(sf::Color _queComida)
  void GraficoSFML::MueveJugador(sf::Vector2f _posicion)
  {
     posicionJugador = _posicion;
-    InitPlayer();
+    jugador.setPosition(posicionJugador);
+    manoIzquierda.setPosition(sf::Vector2f(posicionJugador.x-25,posicionJugador.y));
+    manoDerecha.setPosition(sf::Vector2f(posicionJugador.x+25+35,posicionJugador.y));
+
  }
+
+ int GraficoSFML::Colisionando(sf::Vector2f ubicacion, std::vector<sf::Vector2f> fOrigenMesas,std::vector<sf::Vector2f> fOrigenDispensadores, sf::Vector2f tamanoMesa){
+
+    int returnInt;
+    int tamanoX = tamanoMesa.x/2;
+    int tamanoY = tamanoMesa.y/2;
+
+    if(ubicacion.x > fOrigenMesas[0].x - tamanoX && ubicacion.x < fOrigenMesas[0].x + tamanoX && ubicacion.y > fOrigenMesas[0].y - tamanoY && ubicacion.y < fOrigenMesas[0].y + tamanoY){
+        returnInt = 0;
+    } else
+
+    if(ubicacion.x > fOrigenMesas[1].x - tamanoX && ubicacion.x < fOrigenMesas[1].x + tamanoX && ubicacion.y > fOrigenMesas[1].y - tamanoY && ubicacion.y < fOrigenMesas[1].y + tamanoY){
+        returnInt = 1;
+    } else
+
+    if(ubicacion.x > fOrigenMesas[2].x - tamanoX && ubicacion.x < fOrigenMesas[2].x + tamanoX && ubicacion.y > fOrigenMesas[2].y - tamanoY && ubicacion.y < fOrigenMesas[2].y + tamanoY){
+        returnInt = 2;
+    } else
+
+    if(ubicacion.x > fOrigenDispensadores[0].x - tamanoX && ubicacion.x < fOrigenDispensadores[0].x + tamanoX && ubicacion.y > fOrigenDispensadores[0].y - tamanoY && ubicacion.y < fOrigenDispensadores[0].y + tamanoY){
+        returnInt = 3;
+    } else
+
+    if(ubicacion.x > fOrigenDispensadores[1].x - tamanoX && ubicacion.x < fOrigenDispensadores[1].x + tamanoX && ubicacion.y > fOrigenDispensadores[1].y - tamanoY && ubicacion.y < fOrigenDispensadores[1].y + tamanoY){
+        returnInt = 4;
+    } else
+
+    if(ubicacion.x > fOrigenDispensadores[2].x - tamanoX && ubicacion.x < fOrigenDispensadores[2].x + tamanoX && ubicacion.y > fOrigenDispensadores[2].y - tamanoY && ubicacion.y < fOrigenDispensadores[2].y + tamanoY){
+        returnInt = 5;
+    } else {
+        returnInt = -1;
+    }
+
+
+
+    return returnInt;
+ }
+
+void GraficoSFML::Timer(time_t &startTime){
+
+    time_t currentTime;
+    time(&currentTime);
+    float spanse;
+
+    spanse = currentTime - startTime;
+    std::cout << spanse << std::endl;
+
+
+    if(spanse>0.1){
+
+        tiempoRestante--;
+
+        time(&startTime);
+
+        aTextosADibujar[1].setString(std::to_string(tiempoRestante)+" seg.");
+
+       // txtCounterTime.setString(std::to_string(tiempoRestante)+" seg.");
+    }
+
+};
 
 
 GraficoSFML::~GraficoSFML()

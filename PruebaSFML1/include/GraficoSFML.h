@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <chrono>
+#include <iostream>
 
 #define TABURETE_VACIO sf::Color::White
 #define TABURETE_OCUPADO sf::Color::Magenta
@@ -19,6 +21,9 @@
 class GraficoSFML
 {
     public:
+
+        int tiempoTotal = 180.0;
+
         sf::CircleShape jugador;
         sf::RectangleShape manoIzquierda;
         sf::RectangleShape manoDerecha;
@@ -28,14 +33,23 @@ class GraficoSFML
         sf::CircleShape aTaburetesADibujar[NUM_MESAS];
         sf::RectangleShape aPedidosADibujar[NUM_MESAS];
 
+        std::vector<sf::Vector2f> aOrigenMesas;
+        std::vector<sf::Vector2f> aOrigenDispensadores;
+
+
         int tiempoRestante;
         int numClientesRestantes;
         sf::Vector2f posicionJugador;
+        sf::Vector2f sizeMesa = MESA_SIZE;
 
         GraficoSFML();
+
+        int Colisionando(sf::Vector2f ubicacion, std::vector<sf::Vector2f> fOrigenMesas,std::vector<sf::Vector2f> fOrigenDispensadores, sf::Vector2f tamanoMesa);
+
         bool TabureteVacio(int _posicion);
         void OcupaTaburete(int _posicion);
         void VaciaTaburete(int _posicion);
+
 
         void VaciaPedido(int _posicion);
         void PonPedido(int _posicion, sf::Color _queComida);
@@ -46,6 +60,9 @@ class GraficoSFML
         bool DejaComida(sf::Color _queComida);
 
         void MueveJugador(sf::Vector2f _posicion);
+
+        void Timer(time_t &startTime);
+
         virtual ~GraficoSFML();
 
     protected:
@@ -53,14 +70,15 @@ class GraficoSFML
     private:
 
         sf::Font font;
-        std::vector<sf::Vector2f> aOrigenMesas;
-        std::vector<sf::Vector2f> aOrigenDispensadores;
+
+
         void InitContadorTiempo();
         void InitContadorClientes();
         void InitTaburetes();
         void InitPedidos();
         void InitObjetosFijos();
         void InitPlayer();
+
 
 };
 
