@@ -144,6 +144,7 @@ void GraficoSFML::OcupaTaburete(int _posicion)
 void GraficoSFML::VaciaTaburete(int _posicion)
 {
     aTaburetesADibujar[_posicion].setFillColor(TABURETE_VACIO);
+    clientesRestantes--;
 }
 
 void GraficoSFML::VaciaPedido(int _posicion)
@@ -231,26 +232,31 @@ bool GraficoSFML::DejaComida(sf::Color _queComida)
     return returnInt;
  }
 
-void GraficoSFML::Timer(time_t &startTime){
+void GraficoSFML::Timer(){
 
-    time_t currentTime;
+    /*time_t currentTime;
     time(&currentTime);
     float spanse;
 
     spanse = currentTime - startTime;
-    std::cout << spanse << std::endl;
 
 
-    if(spanse>0.1){
+
+    if(spanse>0.1){*/
 
         tiempoRestante--;
 
-        time(&startTime);
+       // time(&startTime);
 
         aTextosADibujar[1].setString(std::to_string(tiempoRestante)+" seg.");
 
        // txtCounterTime.setString(std::to_string(tiempoRestante)+" seg.");
-    }
+    /*}*/
+
+};
+
+ void GraficoSFML:: HandlerTime(){
+    tiempoRestante--;
 
 };
 

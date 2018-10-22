@@ -5,6 +5,16 @@
 #include <vector>
 #include <chrono>
 #include <iostream>
+#include <signal.h>
+
+/*#include "../../dep/inc/XML/rapidxml.hpp"
+#include "../../dep/inc/XML/rapidxml_utils.hpp"
+#include "../../dep/inc/XML/rapidxml_iterators.hpp"
+#include "../../dep/inc/XML/rapidxml_print.hpp"*/
+
+
+
+
 
 #define TABURETE_VACIO sf::Color::White
 #define TABURETE_OCUPADO sf::Color::Magenta
@@ -23,6 +33,7 @@ class GraficoSFML
     public:
 
         int tiempoTotal = 180.0;
+        int clientesRestantes = 5;
 
         sf::CircleShape jugador;
         sf::RectangleShape manoIzquierda;
@@ -61,7 +72,9 @@ class GraficoSFML
 
         void MueveJugador(sf::Vector2f _posicion);
 
-        void Timer(time_t &startTime);
+        void Timer();
+
+        void HandlerTime();
 
         virtual ~GraficoSFML();
 
